@@ -1,0 +1,39 @@
+import java.util.*;
+public class Stack {
+    public static String decodestring(String str){
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> sStack = new Stack<>();
+        String curr = "";
+        int count = 0;
+
+        for(int i=0 ; i< str.length();i++){
+                if(Character.isDigit(str.charAt(i))) {
+                count = count*10 + str.charAt(i)-'0';
+            }
+            else if(str.charAt(i) == '['){
+              numStack.push(count);
+              sStack.push(curr);
+              count = 0;
+              curr = "";
+            }
+            else if(str.charAt(i) == ']'){
+               StringBuilder decode = new StringBuilder(sStack.pop());
+               int repeat = numStack.pop();
+                for(int j=0;j<repeat;j++){
+                    decode.append(curr);
+                }
+                curr = decode.toString();
+        }
+        else{
+            curr += str.charAt(i);
+        }
+
+    }
+    return curr;
+
+}
+    public static void main(String[] args) {
+        String str = "3[a]2[b]";
+        System.out.println(decodestring(str));
+    }
+}
