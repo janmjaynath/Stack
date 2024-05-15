@@ -1,0 +1,51 @@
+import java.util.*;
+public class Stack{
+    public static String Canonicalpath(String path){
+        Stack<String> str = new Stack<String>();
+        String res = "";
+        res += "/";
+   
+
+        for(int i=0 ;i<path.length();i++){
+            String temp = "";
+            while(i < path.length() && path.charAt(i) == '/'){
+                i++;
+            }
+            while(i < path.length() && path.charAt(i) != '/'){
+                temp += path.charAt(i);
+                i++;
+            }
+            if(temp == ".."){
+                if(!str.isEmpty()){
+                    str.pop();
+                }
+            }
+            else if(temp == "."){
+                continue;
+            }
+
+            else if(temp.length() != 0){
+                str.push(temp);
+            }
+           Stack<String>str2 = new Stack<String>();
+
+           while(!str.isEmpty()){
+            str2.push(str.pop());
+           }
+           while (!str2.isEmpty()) {
+            if(str2.size() != 1){
+                res += str2.pop() + "/";
+            }
+            else{
+                res += str2.pop();
+            }
+           }
+           
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        String path = "/apnacollege/";
+        System.out.println(Canonicalpath(path));
+    }
+}
